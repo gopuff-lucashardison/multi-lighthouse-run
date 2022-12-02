@@ -7,7 +7,7 @@ function runLighthouse({ url, runLimit, platform, otherParameters }) {
     console.log(`Running performance test ${runs + 1}`);
     try {
       execSync(
-        `lighthouse ${url} --quiet --preset=${platform} --chrome-flags="--headless" --output-path=/tmp/report_${
+        `lighthouse ${url} --quiet --chrome-flags="--headless" --output-path=/tmp/report_${
           runs + 1
         }.json --output json ${otherParameters}`
       );
@@ -60,7 +60,7 @@ function cleaningMemory() {
 
 function validatingParameters({ url, runLimit, platform }) {
   let isValidPlatform =
-    platform.toLowerCase() === "desktop" || platform.toLowerCase() === "mobile";
+    platform?.toLowerCase() === "desktop" || platform?.toLowerCase() === "mobile" || platform === null;
   if (!isValidHttpUrl(url)) {
     throw Error("Enter a valid URL");
   }
@@ -70,7 +70,7 @@ function validatingParameters({ url, runLimit, platform }) {
   }
 
   if (!isValidPlatform) {
-    throw Error("Enter either desktop or mobile");
+    throw Error("Enter either desktop or mobile (actually, \"mobile\" will not work anymore)");
   }
   return true;
 }
